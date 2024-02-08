@@ -1,0 +1,32 @@
+{
+  "plugins": ["prettier"],
+  "extends": [
+    "prettier",
+    "react-app",
+    "next/core-web-vitals",
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "env": {
+    "browser": true,
+    "amd": true,
+    "node": true
+  },
+  "rules": {
+    "semi": ["off", "always"],
+    "no-extra-semi": "error",
+    "semi-style": ["error", "last"],
+    "sort-imports": ["error", { "ignoreDeclarationSort": true }],
+    "quotes": ["error", "single"],
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "comma-dangle": "off",
+    "@typescript-eslint/comma-dangle": "off",
+    "jsx-quotes": "off",
+    "block-spacing": "error",
+    "object-curly-spacing": [2, "always"],
+    "no-duplicate-imports": "error",
+    "react/display-name": "off",
+    "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
+    "react-hooks/exhaustive-deps": "off"
+  }
+}
