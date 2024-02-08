@@ -1,5 +1,5 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { type DefaultSession, type NextAuthOptions, getServerSession } from 'next-auth';
+import { type DefaultSession, type NextAuthOptions, Session, getServerSession } from 'next-auth';
 import DiscordProvider from 'next-auth/providers/discord';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
@@ -37,13 +37,16 @@ declare module 'next-auth' {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    session: async (params) => {
+      const { session, user } = params;
+      const users = await db.user.findUnique({
+        where: {
+          email: user.email,
+        },
+      });
+      (session.user as any).role = users!.role;
+      return session;
+    },
   },
   adapter: PrismaAdapter(db),
   providers: [
@@ -58,9 +61,9 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: 'credentials',
       credentials: {
-        email: { label: 'Email', type: 'text', placeholder: 'jsmith' },
-        username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
-        password: { label: 'Password', type: 'password' },
+        email: { label: 'Enter email', type: 'text', placeholder: 'email' },
+        username: { label: 'Enter username', type: 'text', placeholder: 'username' },
+        password: { label: 'Enter password', type: 'text', placeholder: 'password' },
       },
       async authorize(credentials, req) {
         if (credentials!.email || credentials!.password) {
@@ -72,7 +75,6 @@ export const authOptions: NextAuthOptions = {
             email: credentials!.email,
           },
         });
-
         if (!user) {
           console.log('User not found');
           return null;
@@ -81,7 +83,6 @@ export const authOptions: NextAuthOptions = {
         const isPasswordValid = await bcrypt.compare(credentials!.password, user.password);
 
         if (!isPasswordValid) {
-          console.log('Incorrect Password');
           return null;
         }
 

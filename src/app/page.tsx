@@ -1,9 +1,9 @@
 export default async function Home() {
-   return(
-       <>
-           <main>
-               <div></div>
-           </main>
-       </>
-   );
+  return (
+    <>
+      <main>
+        <div></div>
+      </main>
+    </>
+  );
 }

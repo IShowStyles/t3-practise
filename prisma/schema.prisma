@@ -8,35 +8,65 @@ datasource db {
 }
 
 model PizzaProduct {
-  id    Int    @id @default(autoincrement())
-  image String
-  price Float
-  size  String
+  id             String           @id @default(uuid())
+  image          String
+  name           String
+  price          Float
+  description    String
+  PizzaAgreement PizzaAgreement[] // Define a many-to-many relation
+  agreementId    String?
 }
 
 model User {
-  id         Int              @id @default(autoincrement())
-  email      String           @unique
-  role       UserRole         @default(USER)
-  agreements Agreement[]
-  contacts   ContactRequest[]
+  id            String          @id @default(uuid())
+  username      String          @unique
+  email         String          @unique
+  password      String
+  role          UserRole        @default(USER)
+  UserAgreement UserAgreement[]
 }
 
 model Agreement {
-  id      Int    @id @default(autoincrement())
-  userId  Int
-  content String
-  user    User   @relation(fields: [userId], references: [id])
+  id             String           @id @default(uuid())
+  content        String
+  editonal       String
+  UserAgreement  UserAgreement[] // Define a many-to-many relation
+  PizzaAgreement PizzaAgreement[]
+}
+
+model PizzaAgreement {
+  id             String       @id @default(uuid())
+  agreementId    String       @default(uuid())
+  pizzaProductId String       @default(uuid())
+  agreement      Agreement    @relation(fields: [agreementId], references: [id])
+  pizzaProduct   PizzaProduct @relation(fields: [pizzaProductId], references: [id])
+}
+
+model UserAgreement {
+  id          String    @default(uuid())
+  userId      String    @default(uuid())
+  agreementId String    @default(uuid())
+  user        User      @relation(fields: [userId], references: [id])
+  agreement   Agreement @relation(fields: [agreementId], references: [id])
+
+  @@id([userId, agreementId])
 }
 
 model ContactRequest {
-  id      Int    @id @default(autoincrement())
-  userId  Int
-  contact String
-  user    User   @relation(fields: [userId], references: [id])
+  id          Int    @id @default(autoincrement())
+  phoneNumber String
+  userId      Int
+  name        String
+  content     String
 }
 
 enum UserRole {
   ADMIN
   USER
+}
+
+enum PizzaSize {
+  Large
+  Medium
+  Small
 }
