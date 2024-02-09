@@ -1,18 +1,20 @@
 import { createTRPCRouter, publicProcedure } from '~/server/api/trpc';
 import { z } from 'zod';
+import bcrypt from 'bcrypt';
 
 export const authRouter = createTRPCRouter({
   register: publicProcedure
     .input(
       z.object({
         email: z.string(),
-        userName: z.string(),
+        username: z.string(),
         password: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       try {
-        const { email, userName, password } = input;
+        const { email, username, password } = input;
+        const hashedPassword = await bcrypt.hash(password, 10); // 10 is the number of salt rounds
         const users = await ctx.db.user.findUnique({
           where: {
             email: email,
@@ -26,8 +28,8 @@ export const authRouter = createTRPCRouter({
         const createUser = await ctx.db.user.create({
           data: {
             email: email,
-            username: userName,
-            password: password!,
+            username: username,
+            password: hashedPassword,
           },
         });
         return createUser;

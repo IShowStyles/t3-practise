@@ -1,5 +1,5 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { type DefaultSession, type NextAuthOptions, Session, getServerSession } from 'next-auth';
+import { type DefaultSession, type NextAuthOptions, getServerSession } from 'next-auth';
 import DiscordProvider from 'next-auth/providers/discord';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
@@ -8,6 +8,7 @@ import bcrypt from 'bcrypt';
 import { env } from '~/env';
 import { db } from '~/server/db';
 import * as process from 'process';
+import { UserRole } from '@prisma/client';
 
 /**
  * Module augmentation for next-auth types. Allows us to add custom properties to the session
@@ -19,15 +20,11 @@ declare module 'next-auth' {
   interface Session extends DefaultSession {
     user: {
       id: string;
-      // ...other properties
-      // role: UserRole;
+      email: string;
+      username: string;
+      role: UserRole;
     } & DefaultSession['user'];
   }
-
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
 }
 
 /**
@@ -44,7 +41,7 @@ export const authOptions: NextAuthOptions = {
           email: user.email,
         },
       });
-      (session.user as any).role = users!.role;
+      session.user.role = users!.role;
       return session;
     },
   },
@@ -66,7 +63,8 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Enter password', type: 'text', placeholder: 'password' },
       },
       async authorize(credentials, req) {
-        if (credentials!.email || credentials!.password) {
+        if (!credentials!.email || !credentials!.password || !credentials!.username) {
+          console.log('credentials empty');
           throw new Error('Email and password are required');
         }
 
@@ -76,18 +74,16 @@ export const authOptions: NextAuthOptions = {
           },
         });
         if (!user) {
-          console.log('User not found');
+          console.log(`doesnt exist with ${credentials!.email}`);
           return null;
         }
 
         const isPasswordValid = await bcrypt.compare(credentials!.password, user.password);
-
+        console.log(isPasswordValid);
         if (!isPasswordValid) {
+          console.log('password not valid');
           return null;
         }
-
-        // Password is valid, return the user object
-        // You might want to omit sensitive data like password
         const { password, ...userWithoutPassword } = user;
         return userWithoutPassword;
       },

@@ -11,7 +11,6 @@ import { authRouter } from '~/server/api/routers/register';
 export const appRouter = createTRPCRouter({
   pizza: pizzaRouter,
   auth: authRouter,
-
 });
 
 // export type definition of API
