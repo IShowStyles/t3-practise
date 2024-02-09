@@ -18,4 +18,4 @@ export default withAuth({
   },
 });
 
-export const config = { matcher: ['/admin-panel:path*', '/profile'] };
+export const config = { matcher: ['/admin-panel:path*'] };
