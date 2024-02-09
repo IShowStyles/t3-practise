@@ -64,7 +64,6 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         if (!credentials!.email || !credentials!.password || !credentials!.username) {
-          console.log('credentials empty');
           throw new Error('Email and password are required');
         }
 
@@ -74,14 +73,11 @@ export const authOptions: NextAuthOptions = {
           },
         });
         if (!user) {
-          console.log(`doesnt exist with ${credentials!.email}`);
           return null;
         }
 
         const isPasswordValid = await bcrypt.compare(credentials!.password, user.password);
-        console.log(isPasswordValid);
         if (!isPasswordValid) {
-          console.log('password not valid');
           return null;
         }
         const { password, ...userWithoutPassword } = user;

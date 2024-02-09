@@ -1,4 +1,3 @@
-import { postRouter } from '~/server/api/routers/post';
 import { createTRPCRouter } from '~/server/api/trpc';
 import { pizzaRouter } from '~/server/api/routers/pizza';
 import { authRouter } from '~/server/api/routers/register';

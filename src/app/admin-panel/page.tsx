@@ -5,9 +5,7 @@ const AdminPanel = () => {
     <section>
       <div className='container'>134</div>
       <div>
-        <p>
-          Lorem ipsum dolor sit amet!
-        </p>
+        <p>Lorem ipsum dolor sit amet!</p>
       </div>
     </section>
   );

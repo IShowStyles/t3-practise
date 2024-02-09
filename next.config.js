@@ -6,11 +6,15 @@ await import('./src/env.js');
 
 /** @type {import("next").NextConfig} */
 const config = {
-  webpack: (config) => {
+  swcMinify: false,
+  runtime: 'edge',
+  unstable_allowDynamic: ['./node_modules/@babel/runtime/regenerator/index.js', './node_modules/next-auth/**'],
+  webpack: (config, { isServer }) => {
     config.externals = [...config.externals, 'bcrypt'];
+    // if (!isServer) {
+    //   config.resolve.alias['@babel/runtime/regenerator'] = regeneratorRuntime;
+    // }
     return config;
   },
-  swcMinify: false,
 };
-
 export default config;

@@ -33,11 +33,11 @@ const SignUp = () => {
                 <div className='px-4 md:px-0 lg:w-6/12'>
                   <div className='md:mx-6 md:p-12'>
                     <div className='text-center'>
-                      <img
-                        className='mx-auto w-48'
-                        src='https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp'
-                        alt='logo'
-                      />
+                      {/*<img*/}
+                      {/*  className='mx-auto w-48'*/}
+                      {/*  src='https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp'*/}
+                      {/*  alt='logo'*/}
+                      {/*/>*/}
                       <h4 className='mb-12 mt-1 pb-1 text-xl font-semibold'>Like Pizza</h4>
                     </div>
                     <form

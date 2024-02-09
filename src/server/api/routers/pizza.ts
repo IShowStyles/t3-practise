@@ -20,11 +20,18 @@ const deletePizzaInputSchema = z.object({
   id: z.string(), // Assuming id is the identifier of the pizza product to be deleted
 });
 
+enum PizzaSize {
+  Small = 'Small',
+  Medium = 'Medium',
+  Large = 'Large',
+}
+
 const createPizzaInputSchema = z.object({
   image: z.string(),
   name: z.string(),
   price: z.number().positive(),
   description: z.string(),
+  size: z.nativeEnum(PizzaSize),
 });
 
 export const pizzaRouter = createTRPCRouter({
@@ -49,7 +56,11 @@ export const pizzaRouter = createTRPCRouter({
     const data = createPizzaInputSchema.parse(input);
     const created = await ctx.db.pizzaProduct.create({
       data: {
-        ...data,
+        name: data.name,
+        image: data.image,
+        description: data.description,
+        price: data.price,
+        size: data.size,
       },
     });
     return created;
