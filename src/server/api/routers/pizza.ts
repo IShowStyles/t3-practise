@@ -20,7 +20,7 @@ const deletePizzaInputSchema = z.object({
   id: z.string(), // Assuming id is the identifier of the pizza product to be deleted
 });
 
-enum PizzaSize {
+export enum PizzaSize {
   Small = 'Small',
   Medium = 'Medium',
   Large = 'Large',

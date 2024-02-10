@@ -40,13 +40,14 @@ datasource db {
 // }
 
 model PizzaProduct {
-  id          String      @id @default(uuid())
-  image       String
-  name        String      @unique
-  price       Float
-  description String
-  size        PizzaSize
-  agreement   Agreement[] @relation("AgreementPizzaProducts")
+  id            String      @id @default(uuid())
+  image         String
+  name          String      @unique
+  price         Float
+  description   String
+  isTraditional Boolean     @default(true)
+  size          PizzaSize
+  agreement     Agreement[] @relation("AgreementPizzaProducts")
 }
 
 model User {
