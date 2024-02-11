@@ -14,13 +14,18 @@ async function main() {
     throw new Error('Admin email or password is not provided.');
   }
 
-  const hashedPassword = await bcrypt.hash(adminPassword, 10); // 10 is the number of salt rounds
+  const hashedPassword = await bcrypt.hash(adminPassword, 10);
   const admin = await prisma.user.upsert({
     where: { email: adminEmail },
-    update: {},
+    update: {
+      email: adminEmail,
+      username: 'Admin-User-222',
+      password: hashedPassword,
+      role: 'ADMIN',
+    },
     create: {
       email: adminEmail,
-      username: 'Admin-User-1',
+      username: 'Admin-User-222',
       password: hashedPassword,
       role: 'ADMIN',
     },
