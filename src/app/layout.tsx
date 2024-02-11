@@ -18,7 +18,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='en'>
-      <meta name='google-site-verification' content='WQCEkvzvRCZ1IFQfHuvJ0pkyF5ANkeJViDJJxepIbrU' />
+      <head>
+        <meta name='google-site-verification' content='WQCEkvzvRCZ1IFQfHuvJ0pkyF5ANkeJViDJJxepIbrU' />
+      </head>
       <body className={`font-sans ${inter.variable}`}>
         <TRPCReactProvider>
           <main>{children}</main>
