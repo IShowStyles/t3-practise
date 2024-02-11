@@ -2,7 +2,6 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import {
   type DefaultSession,
   type DefaultUser,
-  type JWT,
   type NextAuthOptions,
   getServerSession,
 } from 'next-auth';
