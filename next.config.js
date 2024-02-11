@@ -8,7 +8,11 @@ await import('./src/env.js');
 const config = {
   swcMinify: false,
   runtime: 'edge',
-  unstable_allowDynamic: ['./node_modules/@babel/runtime/regenerator/index.js', './node_modules/next-auth/**'],
+  unstable_allowDynamic: [
+    './node_modules/bcrypt',
+    './node_modules/@babel/runtime/regenerator/index.js',
+    './node_modules/next-auth/**',
+  ],
   webpack: (config, { isServer }) => {
     config.externals = [...config.externals, 'bcrypt'];
     // if (!isServer) {

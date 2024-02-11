@@ -1,19 +1,6 @@
-'use client';
 import React from 'react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { getServerAuthSession } from '~/server/auth';
 
-const AdminPanel = async () => {
-  const router = useRouter();
-
-  const session = await getSession();
-
-  if (!session || session.user.role === 'USER') {
-    router.push('/');
-    return null;
-  }
-
+const AdminPanel = () => {
   return (
     <section>
       <div className='container'>134</div>
@@ -23,10 +10,5 @@ const AdminPanel = async () => {
     </section>
   );
 };
-
-async function getSession() {
-  const data = await getServerAuthSession();
-  return data;
-}
 
 export default AdminPanel;
