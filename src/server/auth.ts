@@ -9,6 +9,7 @@ import { env } from '~/env';
 import { db } from '~/server/db';
 import * as process from 'process';
 import { UserRole } from '@prisma/client';
+import { DefaultUser } from 'next-auth/src/core/types';
 
 /**
  * Module augmentation for next-auth types. Allows us to add custom properties to the session
@@ -24,6 +25,12 @@ declare module 'next-auth' {
       username: string;
       role: UserRole;
     } & DefaultSession['user'];
+  }
+
+  interface User extends DefaultUser {
+    role: string;
+    id: string;
+    email: string;
   }
 }
 
@@ -46,6 +53,12 @@ export const authOptions: NextAuthOptions = {
       });
       session.user.role = users!.role;
       return session;
+    },
+    jwt: async ({ token, user }) => {
+      if (user) {
+        token.role = user.role;
+      }
+      return token;
     },
   },
   adapter: PrismaAdapter(db),

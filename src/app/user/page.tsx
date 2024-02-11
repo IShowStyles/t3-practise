@@ -1,11 +1,7 @@
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { api } from '~/trpc/server';
+import React from "react";
 
 const Page = async () => {
-  const data = await api.users.get.query();
-
-  return <>{JSON.stringify(data)}</>;
+  return <>hello world</>;
 };
 
 export default Page;
