@@ -1,5 +1,11 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { type DefaultSession, type DefaultUser , type NextAuthOptions, getServerSession } from 'next-auth';
+import {
+  type DefaultSession,
+  type DefaultUser,
+  type JWT,
+  type NextAuthOptions,
+  getServerSession,
+} from 'next-auth';
 import DiscordProvider from 'next-auth/providers/discord';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
@@ -9,6 +15,7 @@ import { env } from '~/env';
 import { db } from '~/server/db';
 import * as process from 'process';
 import { UserRole } from '@prisma/client';
+import { type DefaultJWT } from 'next-auth/jwt';
 
 /**
  * Module augmentation for next-auth types. Allows us to add custom properties to the session
@@ -26,10 +33,25 @@ declare module 'next-auth' {
     } & DefaultSession['user'];
   }
 
-  interface User extends DefaultUser {
-    role: string;
+  interface UsersData {
     id: string;
     email: string;
+    username: string;
+    role: UserRole;
+  }
+
+  interface JWT extends DefaultJWT {
+    id: string;
+    email: string;
+    username: string;
+    role: UserRole;
+  }
+
+  interface User extends DefaultUser {
+    id: string;
+    email: string;
+    username: string;
+    role: UserRole;
   }
 }
 
@@ -56,6 +78,7 @@ export const authOptions: NextAuthOptions = {
     jwt: async ({ token, user }) => {
       if (user) {
         token.role = user.role;
+        token.username = user.username;
       }
       return token;
     },
