@@ -1,13 +1,10 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
-import * as process from 'process';
+import { config } from 'dotenv';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  const adminEmail = process.env?.ADMIN_EMAIL;
-  const adminPassword = process.env?.ADMIN_PASSWORD;
-
   if (adminEmail === undefined || adminPassword === undefined) {
     throw new Error('Admin email or password is not provided.');
   }
