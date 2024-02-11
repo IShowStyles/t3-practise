@@ -1,5 +1,5 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { type DefaultSession, type NextAuthOptions, getServerSession } from 'next-auth';
+import { type DefaultSession, type DefaultUser , type NextAuthOptions, getServerSession } from 'next-auth';
 import DiscordProvider from 'next-auth/providers/discord';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
@@ -9,7 +9,6 @@ import { env } from '~/env';
 import { db } from '~/server/db';
 import * as process from 'process';
 import { UserRole } from '@prisma/client';
-import { DefaultUser } from 'next-auth/src/core/types';
 
 /**
  * Module augmentation for next-auth types. Allows us to add custom properties to the session
