@@ -32,6 +32,9 @@ declare module 'next-auth' {
  *
  * @see https://next-auth.js.org/configuration/options
  */
+
+const scopes = ['identify', 'email'];
+
 export const authOptions: NextAuthOptions = {
   callbacks: {
     session: async (params) => {
@@ -54,6 +57,7 @@ export const authOptions: NextAuthOptions = {
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
+      authorization: { params: { scope: scopes.join(' ') } },
     }),
     CredentialsProvider({
       name: 'credentials',
