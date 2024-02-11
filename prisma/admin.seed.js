@@ -19,13 +19,13 @@ async function main() {
     where: { email: adminEmail },
     update: {
       email: adminEmail,
-      username: 'Admin-User-222',
+      username: 'Admin-User-333',
       password: hashedPassword,
       role: 'ADMIN',
     },
     create: {
       email: adminEmail,
-      username: 'Admin-User-222',
+      username: 'Admin-User-333',
       password: hashedPassword,
       role: 'ADMIN',
     },
