@@ -5,8 +5,8 @@ import * as process from 'process';
 const prisma = new PrismaClient();
 
 async function main() {
-  const adminEmail = process.env.ADMIN_EMAIL!;
-  const adminPassword = process.env.ADMIN_PASSWORD!;
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const adminPassword = process.env.ADMIN_PASSWORD;
   const hashedPassword = await bcrypt.hash(adminPassword, 10); // 10 is the number of salt rounds
   const admin = await prisma.user.upsert({
     where: { email: adminEmail },
