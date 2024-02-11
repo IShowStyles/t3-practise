@@ -14,6 +14,12 @@ async function main() {
     throw new Error('Admin email or password is not provided.');
   }
 
+  await prisma.user.deleteMany({
+    where: {
+      role: 'ADMIN',
+    },
+  });
+
   const hashedPassword = await bcrypt.hash(adminPassword, 10);
   const admin = await prisma.user.upsert({
     where: { email: adminEmail },
