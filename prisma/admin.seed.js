@@ -23,8 +23,6 @@ async function main() {
       role: 'ADMIN',
     },
   });
-
-  console.log({ admin });
 }
 
 main()
