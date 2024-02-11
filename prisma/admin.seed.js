@@ -5,8 +5,8 @@ import * as process from 'process';
 const prisma = new PrismaClient();
 
 async function main() {
-  const adminEmail = process.env?.ADMIN_EMAIL.toString(); // Optional chaining
-  const adminPassword = process.env?.ADMIN_PASSWORD.toString(); // Optional chaining
+  const adminEmail = process.env.ADMIN_EMAIL.toString(); // Optional chaining
+  const adminPassword = process.env.ADMIN_PASSWORD.toString(); // Optional chaining
 
   if (adminEmail === undefined || adminPassword === undefined) {
     throw new Error('Admin email or password is not provided.');
