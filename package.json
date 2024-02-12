@@ -10,7 +10,7 @@
     "dev": "next dev",
     "prisma:seed": "node prisma/admin.seed.js",
     "postinstall": "prisma generate",
-    "create-only": "prisma migrate deploy",
+    "create-only": "prisma migrate deploy && npx prisma db push",
     "lint": "next lint",
     "start": "next start"
   },
