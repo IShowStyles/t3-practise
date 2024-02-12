@@ -6,8 +6,12 @@ const prisma = new PrismaClient();
 
 async function main() {
   const data = dotenv.config().parsed;
-  const adminEmail = data.ADMIN_EMAIL || 'admin@example.com'; // Provide a default email
-  const adminPassword = data.ADMIN_PASSWORD || 'admin123'; // Provide a default password
+  let adminPassword = '';
+  let adminEmail = '';
+  if (data !== undefined) {
+    adminEmail = data.ADMIN_EMAIL || 'admin@example.com';
+    adminPassword = data.ADMIN_PASSWORD || 'admin123';
+  }
 
   // Check if admin email and password are not provided
   if (adminEmail === 'admin@example.com' || adminPassword === 'admin123') {
