@@ -1,17 +1,17 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
-import { config } from 'dotenv';
+import dotenv from 'dotenv';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  config();
+  const data = dotenv.config().parsed;
+  const adminEmail = data.ADMIN_EMAIL || 'admin@example.com'; // Provide a default email
+  const adminPassword = data.ADMIN_PASSWORD || 'admin123'; // Provide a default password
 
-  const adminEmail = process.env.ADMIN_EMAIL;
-  const adminPassword = process.env.ADMIN_PASSWORD;
-
-  if (adminEmail === undefined || adminPassword === undefined) {
-    throw new Error('Admin email or password is not provided.');
+  // Check if admin email and password are not provided
+  if (adminEmail === 'admin@example.com' || adminPassword === 'admin123') {
+    console.warn('Using default admin email or password. Please provide values in your .env file.');
   }
 
   await prisma.user.deleteMany({
