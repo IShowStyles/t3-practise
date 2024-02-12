@@ -20,6 +20,7 @@ const Page = () => {
         <div className='width-[50%]' key={idx.toString()}>
           <p>{elem.role}</p>
           <p>{elem.email}</p>
+          <p>{elem.username}</p>
           <p>{elem.password}</p>
         </div>
       ))}
