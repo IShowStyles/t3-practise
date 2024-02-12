@@ -71,6 +71,8 @@ export const authOptions: NextAuthOptions = {
           email: user.email,
         },
       });
+      // eslint-disable-next-line
+      console.log(users!.email);
       session.user.role = users!.role;
       return session;
     },
